@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=' 'sha256-B6usXjyGMdvBcE9JLtfUrpPkQEgzZ2OalA2WLLX8Ok0=' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Radioactive mineral collecting rules around the world</title><meta name="description" content="Interactive globe showing how countries regulate private collections of radioactive minerals, with the legal basis and sources for each country."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=' 'sha256-Ebm2+uuUcc6IP2h/1dcME7iP63ZcXc4j0Cefj0Bbmpg=' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Radioactive mineral collecting rules around the world</title><meta name="description" content="Interactive globe showing how countries regulate private collections of radioactive minerals, with the legal basis and sources for each country."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
@@ -906,7 +906,9 @@ function startGlobe(topo){
       d3.select(this).attr("display",vis?null:"none").attr("cx",p[0]).attr("cy",p[1])});
   }
   // redraw at most once per frame; use a coarser outline and flat fills while the globe moves
-  function render(){
+  function render(spin){
+    // auto-spin keeps full detail; the lighter outline is only used while dragging, zooming or flying
+    if(spin){if(!raf)raf=requestAnimationFrame(draw);return}
     if(!moving){moving=true;proj.precision(0);path.digits(0);svgEl.classList.add("moving")}
     clearTimeout(idle);idle=setTimeout(()=>{moving=false;if(!lite){proj.precision(1);path.digits(1)}svgEl.classList.remove("moving");if(!raf)raf=requestAnimationFrame(draw)},180);
     if(!raf)raf=requestAnimationFrame(draw);
@@ -914,7 +916,7 @@ function startGlobe(topo){
   // spin
   let spinning=!reduce&&!lite, last=null, visible=true;
   const timer=d3.timer(t=>{if(!spinning||!visible||document.hidden){last=null;return}
-    if(last!==null){const r=proj.rotate();proj.rotate([r[0]+(t-last)*0.006,r[1],r[2]]);render()}last=t});
+    if(last!==null){const r=proj.rotate();proj.rotate([r[0]+(t-last)*0.006,r[1],r[2]]);render(true)}last=t});
   const setSpin=v=>{spinning=v;$("#spin").setAttribute("aria-pressed",String(v));$("#spin").textContent=v?"Pause spin":"Spin"};
   $("#spin").onclick=()=>setSpin(!spinning);setSpin(spinning);
   if(lite){document.documentElement.classList.add("lite");setSpin(false);proj.precision(0);path.digits(0)}
