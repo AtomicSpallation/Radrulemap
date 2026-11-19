@@ -130,6 +130,7 @@ footer p{margin:0;max-width:62ch}
 #globe.moving .lv-N{fill:var(--n-flat)!important}
 #globe.moving .country,.lite #globe .country{vector-effect:none}
 .lite #grat{display:none}
+.gbox{position:relative}
 .ver{position:absolute;right:8px;bottom:6px;z-index:3;font:500 10px var(--mono);color:var(--ink-3);pointer-events:none}
 #lowres[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .note-lite{display:none}.lite .note-lite{display:inline}.lite .note-full{display:none}
@@ -185,7 +186,7 @@ footer p{margin:0;max-width:62ch}
           <button id="lowres" aria-pressed="false" hidden title="Simpler, faster globe for slower computers">Low detail</button>
           <div class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button></div>
         </div>
-        <svg id="globe" viewBox="0 0 800 800" role="img" aria-label="Globe coloured by how countries regulate private radioactive mineral collections">
+        <div class="gbox"><svg id="globe" viewBox="0 0 800 800" role="img" aria-label="Globe coloured by how countries regulate private radioactive mineral collections">
           <defs>
             <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
               <rect width="6" height="6" style="fill:var(--none)"></rect>
@@ -209,9 +210,8 @@ footer p{margin:0;max-width:62ch}
           <g id="lands"></g>
           <g id="dots"></g>
           <path class="rim" id="rim"></path>
-        </svg>
+        </svg><div class="ver" aria-label="Page version">v1.7 · 19 Nov 2026</div></div>
         <div class="status" id="gstatus">Loading globe…</div>
-        <div class="ver" aria-label="Page version">v1.6 · 19 Nov 2026</div>
         <div class="legend" id="legend" role="group" aria-label="Filter by status"><div class="lg-h">Countries</div></div>
       </div>
       <div class="note"><span class="note-full">Grey hatching = no collector-specific guidance found. Coloured stripes = unclear on paper: teal leaning free, brown open, red leaning strict. Plain land = no data.</span><span class="note-lite">Grey hatching = no collector-specific guidance found. Muted teal, brown and red = unclear on paper: leaning free, open, leaning strict. Plain land = no data.</span></div>
