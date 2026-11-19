@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=' 'sha256-HcnWRpuMZns8HRUE911g5Cgor/C4GojPaQOxHOp1fgk=' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Radioactive mineral collecting rules around the world</title><meta name="description" content="Interactive globe showing how countries regulate private collections of radioactive minerals, with the legal basis and sources for each country."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=' 'sha256-B6usXjyGMdvBcE9JLtfUrpPkQEgzZ2OalA2WLLX8Ok0=' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Radioactive mineral collecting rules around the world</title><meta name="description" content="Interactive globe showing how countries regulate private collections of radioactive minerals, with the legal basis and sources for each country."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
@@ -127,16 +127,16 @@ footer p{margin:0;max-width:62ch}
 #globe.moving .lv-L3f,.lite #globe .lv-L3f{fill:var(--l3f-flat)!important}
 #globe.moving .lv-L3,.lite #globe .lv-L3{fill:var(--l3-flat)!important}
 #globe.moving .lv-L3s,.lite #globe .lv-L3s{fill:var(--l3s-flat)!important}
-#globe.moving .lv-N,.lite #globe .lv-N{fill:var(--n-flat)!important}
+#globe.moving .lv-N{fill:var(--n-flat)!important}
 #globe.moving .country,.lite #globe .country{vector-effect:none}
 .lite #grat{display:none}
+.note-lite{display:none}.lite .note-lite{display:inline}.lite .note-full{display:none}
 .lite .sw[data-l="L3f"]{background:var(--l3f-flat)!important}
 .lite .sw[data-l="L3"]{background:var(--l3-flat)!important}
 .lite .sw[data-l="L3s"]{background:var(--l3s-flat)!important}
-.lite .sw[data-l="N"]{background:var(--n-flat)!important}
-:root{--l3f-flat:#9fd3c3;--l3-flat:#d6bf98;--l3s-flat:#eeaaa1;--n-flat:#dcd8ce}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--l3f-flat:#2f5f53;--l3-flat:#64513a;--l3s-flat:#713a34;--n-flat:#33342f}}
-:root[data-theme="dark"]{--l3f-flat:#2f5f53;--l3-flat:#64513a;--l3s-flat:#713a34;--n-flat:#33342f}
+:root{--l3f-flat:#bfe3d8;--l3-flat:#d6bf98;--l3s-flat:#eeaaa1;--n-flat:#dcd8ce}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--l3f-flat:#1d3a34;--l3-flat:#64513a;--l3s-flat:#713a34;--n-flat:#33342f}}
+:root[data-theme="dark"]{--l3f-flat:#1d3a34;--l3-flat:#64513a;--l3s-flat:#713a34;--n-flat:#33342f}
 .ocean{fill:var(--ocean)}
 .grat{fill:none;stroke:var(--grat);stroke-width:.6}
 .rim{fill:none;stroke:var(--rim);stroke-width:1}
@@ -210,7 +210,7 @@ footer p{margin:0;max-width:62ch}
         <div class="status" id="gstatus">Loading globe…</div>
         <div class="legend" id="legend" role="group" aria-label="Filter by status"><div class="lg-h">Countries</div></div>
       </div>
-      <div class="note">Grey hatching = no collector-specific guidance found. Coloured stripes = unclear on paper: teal leaning free, brown open, red leaning strict. Plain land = no data.</div>
+      <div class="note"><span class="note-full">Grey hatching = no collector-specific guidance found. Coloured stripes = unclear on paper: teal leaning free, brown open, red leaning strict. Plain land = no data.</span><span class="note-lite">Grey hatching = no collector-specific guidance found. Muted teal, brown and red = unclear on paper: leaning free, open, leaning strict. Plain land = no data.</span></div>
       <div class="tip" id="tip" hidden></div>
     </div>
     <aside class="panel" id="panel" aria-live="polite"></aside>
@@ -886,8 +886,12 @@ function startGlobe(topo){
   Object.entries(DOTS).forEach(([k,c])=>{if(!centroids[k])centroids[k]=c});
 
   const svgEl=document.getElementById("globe");let raf=0,idle=0,moving=false;
-  // phones and small screens get a lighter globe automatically
-  const lite=window.matchMedia("(pointer: coarse), (max-width: 860px)").matches;
+  // phones and tablets get a lighter globe automatically (judged by the device, not the window size)
+  const mq=q=>window.matchMedia(q).matches;
+  const lite=!!(navigator.userAgentData&&navigator.userAgentData.mobile)
+    ||/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+    ||(mq("(hover: none)")&&mq("(pointer: coarse)"))
+    ||Math.min(screen.width,screen.height)<=600;
   function draw(){raf=0;
     d3.select("#ocean").attr("d",path({type:"Sphere"}));
     d3.select("#rim").attr("d",path({type:"Sphere"}));
@@ -908,7 +912,7 @@ function startGlobe(topo){
     if(!raf)raf=requestAnimationFrame(draw);
   }
   // spin
-  let spinning=!reduce&&!window.matchMedia("(pointer: coarse), (max-width: 860px)").matches, last=null, visible=true;
+  let spinning=!reduce&&!lite, last=null, visible=true;
   const timer=d3.timer(t=>{if(!spinning||!visible||document.hidden){last=null;return}
     if(last!==null){const r=proj.rotate();proj.rotate([r[0]+(t-last)*0.006,r[1],r[2]]);render()}last=t});
   const setSpin=v=>{spinning=v;$("#spin").setAttribute("aria-pressed",String(v));$("#spin").textContent=v?"Pause spin":"Spin"};
