@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=' 'sha256-Ebm2+uuUcc6IP2h/1dcME7iP63ZcXc4j0Cefj0Bbmpg=' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Radioactive mineral collecting rules around the world</title><meta name="description" content="Interactive globe showing how countries regulate private collections of radioactive minerals, with the legal basis and sources for each country."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=' 'sha256-1CIN42xQVRVBZbKLKbq7LGHB2sQJWEsl1MzSW5J8xzw=' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Radioactive mineral collecting rules around the world</title><meta name="description" content="Interactive globe showing how countries regulate private collections of radioactive minerals, with the legal basis and sources for each country."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
@@ -130,6 +130,7 @@ footer p{margin:0;max-width:62ch}
 #globe.moving .lv-N{fill:var(--n-flat)!important}
 #globe.moving .country,.lite #globe .country{vector-effect:none}
 .lite #grat{display:none}
+#lowres[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .note-lite{display:none}.lite .note-lite{display:inline}.lite .note-full{display:none}
 .lite .sw[data-l="L3f"]{background:var(--l3f-flat)!important}
 .lite .sw[data-l="L3"]{background:var(--l3-flat)!important}
@@ -180,6 +181,7 @@ footer p{margin:0;max-width:62ch}
           <button data-go="an">Antarctica</button>
           <button data-go="world">Whole globe</button>
           <button id="spin" aria-pressed="true">Pause spin</button>
+          <button id="lowres" aria-pressed="false" hidden title="Simpler, faster globe for slower computers">Low detail</button>
           <div class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">−</button></div>
         </div>
         <svg id="globe" viewBox="0 0 800 800" role="img" aria-label="Globe coloured by how countries regulate private radioactive mineral collections">
@@ -888,10 +890,11 @@ function startGlobe(topo){
   const svgEl=document.getElementById("globe");let raf=0,idle=0,moving=false;
   // phones and tablets get a lighter globe automatically (judged by the device, not the window size)
   const mq=q=>window.matchMedia(q).matches;
-  const lite=!!(navigator.userAgentData&&navigator.userAgentData.mobile)
+  const phone=!!(navigator.userAgentData&&navigator.userAgentData.mobile)
     ||/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
     ||(mq("(hover: none)")&&mq("(pointer: coarse)"))
     ||Math.min(screen.width,screen.height)<=600;
+  let lite=false;
   function draw(){raf=0;
     d3.select("#ocean").attr("d",path({type:"Sphere"}));
     d3.select("#rim").attr("d",path({type:"Sphere"}));
@@ -907,19 +910,23 @@ function startGlobe(topo){
   }
   // redraw at most once per frame; use a coarser outline and flat fills while the globe moves
   function render(spin){
-    // auto-spin keeps full detail; the lighter outline is only used while dragging, zooming or flying
-    if(spin){if(!raf)raf=requestAnimationFrame(draw);return}
+    // computers always draw full detail; phones use a lighter outline while the globe moves
+    if(spin||!lite){if(!raf)raf=requestAnimationFrame(draw);return}
     if(!moving){moving=true;proj.precision(0);path.digits(0);svgEl.classList.add("moving")}
     clearTimeout(idle);idle=setTimeout(()=>{moving=false;if(!lite){proj.precision(1);path.digits(1)}svgEl.classList.remove("moving");if(!raf)raf=requestAnimationFrame(draw)},180);
     if(!raf)raf=requestAnimationFrame(draw);
   }
   // spin
-  let spinning=!reduce&&!lite, last=null, visible=true;
+  let spinning=!reduce&&!phone, last=null, visible=true;
   const timer=d3.timer(t=>{if(!spinning||!visible||document.hidden){last=null;return}
     if(last!==null){const r=proj.rotate();proj.rotate([r[0]+(t-last)*0.006,r[1],r[2]]);render(true)}last=t});
   const setSpin=v=>{spinning=v;$("#spin").setAttribute("aria-pressed",String(v));$("#spin").textContent=v?"Pause spin":"Spin"};
   $("#spin").onclick=()=>setSpin(!spinning);setSpin(spinning);
-  if(lite){document.documentElement.classList.add("lite");setSpin(false);proj.precision(0);path.digits(0)}
+  // computers can switch to the same low-detail drawing with the "Low detail" button
+  const setLite=v=>{lite=v;document.documentElement.classList.toggle("lite",v);$("#lowres").setAttribute("aria-pressed",String(v));
+    if(v){setSpin(false);proj.precision(0);path.digits(0)}else{proj.precision(1);path.digits(1);d3.select("#grat").attr("d",path(grat))}
+    if(!raf)raf=requestAnimationFrame(draw)};
+  if(phone)setLite(true);else{$("#lowres").hidden=false;$("#lowres").onclick=()=>setLite(!lite)}
   if("IntersectionObserver" in window)new IntersectionObserver(es=>{visible=es[0].isIntersecting}).observe(svgEl);
   // drag
   d3.select("#globe").call(d3.drag().clickDistance(4)
