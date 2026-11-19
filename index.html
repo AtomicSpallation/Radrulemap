@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=' 'sha256-Wdexh6m003bW7f3KMhlnf8GFy47EVZcUFWuiyvjFhKE=' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Radioactive mineral collecting rules around the world</title><meta name="description" content="Interactive globe showing how countries regulate private collections of radioactive minerals, with the legal basis and sources for each country."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=' 'sha256-HcnWRpuMZns8HRUE911g5Cgor/C4GojPaQOxHOp1fgk=' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Radioactive mineral collecting rules around the world</title><meta name="description" content="Interactive globe showing how countries regulate private collections of radioactive minerals, with the legal basis and sources for each country."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
@@ -124,6 +124,19 @@ footer p{margin:0;max-width:62ch}
 .globe-wrap{position:relative}
 #globe{display:block;width:100%;height:auto;max-height:78vh;margin:0 auto;touch-action:none;cursor:grab;aspect-ratio:1/1}
 #globe:active{cursor:grabbing}
+#globe.moving .lv-L3f,.lite #globe .lv-L3f{fill:var(--l3f-flat)!important}
+#globe.moving .lv-L3,.lite #globe .lv-L3{fill:var(--l3-flat)!important}
+#globe.moving .lv-L3s,.lite #globe .lv-L3s{fill:var(--l3s-flat)!important}
+#globe.moving .lv-N,.lite #globe .lv-N{fill:var(--n-flat)!important}
+#globe.moving .country,.lite #globe .country{vector-effect:none}
+.lite #grat{display:none}
+.lite .sw[data-l="L3f"]{background:var(--l3f-flat)!important}
+.lite .sw[data-l="L3"]{background:var(--l3-flat)!important}
+.lite .sw[data-l="L3s"]{background:var(--l3s-flat)!important}
+.lite .sw[data-l="N"]{background:var(--n-flat)!important}
+:root{--l3f-flat:#9fd3c3;--l3-flat:#d6bf98;--l3s-flat:#eeaaa1;--n-flat:#dcd8ce}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--l3f-flat:#2f5f53;--l3-flat:#64513a;--l3s-flat:#713a34;--n-flat:#33342f}}
+:root[data-theme="dark"]{--l3f-flat:#2f5f53;--l3-flat:#64513a;--l3s-flat:#713a34;--n-flat:#33342f}
 .ocean{fill:var(--ocean)}
 .grat{fill:none;stroke:var(--grat);stroke-width:.6}
 .rim{fill:none;stroke:var(--rim);stroke-width:1}
@@ -745,8 +758,9 @@ let selected=null, filter=null;
 
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function swatchStyle(l){return LEVELS[l].sw||`background:${LEVELS[l].fill}`}
+function swAttr(l){return `class="sw" data-l="${l}" style="${swatchStyle(l)}"`}
 function tagHTML(l){const L=LEVELS[l];return L.sw
-  ?`<span class="tag" style="background:var(--none);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-2)"><span class="sw" style="${swatchStyle(l)}"></span>${L.long}</span>`
+  ?`<span class="tag" style="background:var(--none);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-2)"><span ${swAttr(l)}></span>${L.long}</span>`
   :`<span class="tag" style="background:${L.fill};color:${L.text}">${L.long}</span>`}
 
 /* ---------- legend, list, panel ---------- */
@@ -755,7 +769,7 @@ function buildLegend(){
   ORDER_ALL.forEach(l=>{
     const n=Object.values(D).filter(d=>d.l===l).length;
     const b=document.createElement("button");b.className="chip";b.dataset.l=l;b.setAttribute("aria-pressed","false");b.title=LEVELS[l].long;
-    b.innerHTML=`<span class="sw" style="${swatchStyle(l)}"></span>${LEVELS[l].label}<span class="n">${n}</span>`;
+    b.innerHTML=`<span ${swAttr(l)}></span>${LEVELS[l].label}<span class="n">${n}</span>`;
     b.onclick=()=>{filter=filter===l?null:l;document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",String(c.dataset.l===filter)));applyFilter()};
     lg.appendChild(b);
   });
@@ -768,7 +782,7 @@ function buildGroups(){
   ORDER_ALL.forEach(l=>{
     const ks=Object.keys(D).filter(k=>D[k].l===l&&!D[k].auto).sort((a,b)=>D[a].n.localeCompare(D[b].n));
     const box=document.createElement("div");box.className="grp";
-    box.innerHTML=`<div class="gh"><span class="sw" style="${swatchStyle(l)}"></span>${LEVELS[l].label}</div><div class="cs"></div>`;
+    box.innerHTML=`<div class="gh"><span ${swAttr(l)}></span>${LEVELS[l].label}</div><div class="cs"></div>`;
     ks.forEach(k=>{const b=document.createElement("button");b.textContent=D[k].n;b.dataset.k=k;b.onclick=()=>{select(k,true)};box.querySelector(".cs").appendChild(b)});
     g.appendChild(box);
   });
@@ -839,16 +853,23 @@ function startGlobe(topo){
   feats.forEach(f=>{if(d3.geoArea(f)>2*Math.PI){const g=f.geometry;
     if(g.type==="Polygon")g.coordinates.forEach(r=>r.reverse());else g.coordinates.forEach(p=>p.forEach(r=>r.reverse()))}});
   const reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const proj=d3.geoOrthographic().translate([400,400]).scale(385).rotate([-12,-38]).precision(.5);
-  const path=d3.geoPath(proj), grat=d3.geoGraticule10();
+  const proj=d3.geoOrthographic().translate([400,400]).scale(385).rotate([-12,-38]).precision(1);
+  const path=d3.geoPath(proj).digits(1), grat=d3.geoGraticule10();
   const lands=d3.select("#lands");
   feats.forEach(f=>{
     const k=ISO3[f.id]||BYNAME[f.properties.name]||null;
     f.k=k&&D[k]?k:null;
     if(f.k)centroids[f.k]=d3.geoCentroid(f);
+    // bounding cap (centre + angular radius) so features on the far side can be skipped quickly
+    const c=d3.geoCentroid(f);let r=0;
+    const walk=a=>{if(typeof a[0]==="number"){const dd=d3.geoDistance(c,a);if(dd>r)r=dd}else a.forEach(walk)};
+    walk(f.geometry.coordinates);f.cap=[c,r];f.hid=false;
+    // lighter outline (every 3rd point) used only while the globe is moving
+    const thin=ring=>ring.length<=16?ring:ring.filter((p,i)=>i%3===0||i===ring.length-1);
+    const g=f.geometry;f.lo={type:"Feature",geometry:{type:g.type,coordinates:g.type==="Polygon"?g.coordinates.map(thin):g.coordinates.map(pg=>pg.map(thin))}};
   });
   const sel=lands.selectAll("path").data(feats).join("path")
-    .attr("class",f=>"country "+(f.k?"res":"ctx"))
+    .attr("class",f=>"country "+(f.k?"res lv-"+D[f.k].l:"ctx"))
     .attr("data-k",f=>f.k)
     .style("fill",f=>f.k?LEVELS[D[f.k].l].fill:null)
     .on("pointerenter",(e,f)=>{if(e.pointerType!=="touch")showTip(e,f.k,f.properties.name)})
@@ -859,26 +880,41 @@ function startGlobe(topo){
     .on("keydown",(e,f)=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();select(f.k)}});
   // dots for states too small to see from orbit
   const dots=d3.select("#dots").selectAll("circle").data(Object.entries(DOTS).filter(([k])=>D[k])).join("circle")
-    .attr("class","mkdot").attr("data-k",d=>d[0]).attr("r",4.5).style("fill",d=>LEVELS[D[d[0]].l].fill)
+    .attr("class",d=>"mkdot lv-"+D[d[0]].l).attr("data-k",d=>d[0]).attr("r",4.5).style("fill",d=>LEVELS[D[d[0]].l].fill)
     .on("pointerenter",(e,d)=>{if(e.pointerType!=="touch")showTip(e,d[0])}).on("pointermove",e=>{if(e.pointerType!=="touch")moveTip(e)})
     .on("pointerleave",hideTip).on("click",(e,d)=>select(d[0]));
   Object.entries(DOTS).forEach(([k,c])=>{if(!centroids[k])centroids[k]=c});
 
-  function render(){
+  const svgEl=document.getElementById("globe");let raf=0,idle=0,moving=false;
+  // phones and small screens get a lighter globe automatically
+  const lite=window.matchMedia("(pointer: coarse), (max-width: 860px)").matches;
+  function draw(){raf=0;
     d3.select("#ocean").attr("d",path({type:"Sphere"}));
     d3.select("#rim").attr("d",path({type:"Sphere"}));
-    d3.select("#grat").attr("d",path(grat));
-    sel.attr("d",path);
+    if(!lite)d3.select("#grat").attr("d",path(grat));
+    const rot=proj.rotate(),cc=[-rot[0],-rot[1]],lim=Math.PI/2;
+    sel.each(function(f){
+      if(d3.geoDistance(f.cap[0],cc)-f.cap[1]>lim){if(!f.hid){this.setAttribute("d","");f.hid=true}}
+      else{this.setAttribute("d",path(moving||lite?f.lo:f)||"");f.hid=false}
+    });
     const r=proj.rotate(),ctr=[-r[0],-r[1]];
     dots.each(function(d){const vis=d3.geoDistance(d[1],ctr)<Math.PI/2-0.02;const p=proj(d[1]);
       d3.select(this).attr("display",vis?null:"none").attr("cx",p[0]).attr("cy",p[1])});
   }
+  // redraw at most once per frame; use a coarser outline and flat fills while the globe moves
+  function render(){
+    if(!moving){moving=true;proj.precision(0);path.digits(0);svgEl.classList.add("moving")}
+    clearTimeout(idle);idle=setTimeout(()=>{moving=false;if(!lite){proj.precision(1);path.digits(1)}svgEl.classList.remove("moving");if(!raf)raf=requestAnimationFrame(draw)},180);
+    if(!raf)raf=requestAnimationFrame(draw);
+  }
   // spin
-  let spinning=!reduce, last=null;
-  const timer=d3.timer(t=>{if(!spinning){last=null;return}
+  let spinning=!reduce&&!window.matchMedia("(pointer: coarse), (max-width: 860px)").matches, last=null, visible=true;
+  const timer=d3.timer(t=>{if(!spinning||!visible||document.hidden){last=null;return}
     if(last!==null){const r=proj.rotate();proj.rotate([r[0]+(t-last)*0.006,r[1],r[2]]);render()}last=t});
   const setSpin=v=>{spinning=v;$("#spin").setAttribute("aria-pressed",String(v));$("#spin").textContent=v?"Pause spin":"Spin"};
   $("#spin").onclick=()=>setSpin(!spinning);setSpin(spinning);
+  if(lite){document.documentElement.classList.add("lite");setSpin(false);proj.precision(0);path.digits(0)}
+  if("IntersectionObserver" in window)new IntersectionObserver(es=>{visible=es[0].isIntersecting}).observe(svgEl);
   // drag
   d3.select("#globe").call(d3.drag().clickDistance(4)
     .on("start",()=>{setSpin(false);hideTip()})
@@ -891,11 +927,11 @@ function startGlobe(topo){
   window.flyTo=(lonlat,scale)=>{setSpin(false);
     const r0=proj.rotate(),r1=[-lonlat[0],-lonlat[1],0],s0=proj.scale(),s1=scale||Math.max(s0,700);
     const ir=d3.interpolate(r0,r1),is=d3.interpolate(s0,s1);
-    d3.transition().duration(reduce?0:1100).tween("fly",()=>t=>{proj.rotate(ir(t));proj.scale(is(t));render()});
+    d3.transition().duration(reduce||lite?0:1100).tween("fly",()=>t=>{proj.rotate(ir(t));proj.scale(is(t));render()});
   };
   const views={eu:[[12,52],1000],na:[[-85,15],440],oc:[[150,-20],520],ap:[[120,0],440],af:[[20,0],520],world:[[-12,30],385],an:[[0,-80],520]};
   document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{const v=views[b.dataset.go];flyTo(v[0],v[1])});
-  render();applyFilter();updateCounts();renderPanel();
+  draw();applyFilter();updateCounts();renderPanel();
   $("#gstatus").hidden=true;$("#ctrl").hidden=false;
 }
 
