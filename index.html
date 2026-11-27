@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=' 'sha256-TkoovRRtLzxVpEUMayejc9Tck2U6/feYR3u9o9p2Z1w='; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Radioactive mineral collecting rules around the world</title><meta name="description" content="Interactive globe showing how countries regulate private collections of radioactive minerals, with the legal basis and sources for each country."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.fav{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-8glLv2FBs1lyLE/kVOtsSw8OQswQzHr5IfwVj864ZTk=' 'sha256-FnlWk5LAHYEBqxbj0upTwFWc2u3txqEwchPXNUIN1F8='; style-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; object-src 'none'"><meta name="referrer" content="strict-origin-when-cross-origin"><title>Radioactive mineral collecting rules around the world</title><meta name="description" content="Interactive globe showing how countries regulate private collections of radioactive minerals, with the legal basis and sources for each country."><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}.fav{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
 .fav h3{font:500 11px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);margin:0 0 8px;display:flex;align-items:center;gap:6px}
 .fav .n{font:500 10.5px var(--mono);color:var(--ink-3);margin-left:auto}
 .fav .fg{margin-bottom:10px}
@@ -233,7 +233,7 @@ footer p{margin:0;max-width:62ch}
           <g id="lands"></g>
           <g id="dots"></g>
           <path class="rim" id="rim"></path>
-        </svg><canvas id="gcv" aria-hidden="true"></canvas><div class="ver" aria-label="Page version">v3.2 · 27 Nov 2026</div></div>
+        </svg><canvas id="gcv" aria-hidden="true"></canvas><div class="ver" aria-label="Page version">v3.3 · 27 Nov 2026</div></div>
         <div class="status" id="gstatus">Loading globe…</div>
         <div class="legend" id="legend" role="group" aria-label="Filter by status"><div class="lg-h">Countries</div></div>
       </div>
@@ -851,7 +851,7 @@ function renderPanel(){
       ${row("Consumer items",d.c?esc(d.c):"")}
       ${row("Finds & disposal",d.d?esc(d.d):"")}
       ${row("Basis · confidence",d.basis?`${esc(d.basis)} · <span class="conf">${esc(d.conf)}</span>`:"")}
-      ${row("Sources",(src||"None: searched, no document found")+(/reply/i.test(d.basis||"")?` <span class="conf">· Official regulator reply: received privately and not published, for privacy (see note below the map)</span>`:""))}
+      ${row("Sources",(src||"None: searched, no document found")+(/reply/i.test(d.basis||"")?` <span class="conf">· Based on an official reply from the regulator, which is not published for privacy. If you need the details of this reply, contact me privately on Reddit or Instagram: atomicspallation</span>`:""))}
     </dl>`;
   p.querySelector(".back").onclick=()=>{select(selected)};
 }
